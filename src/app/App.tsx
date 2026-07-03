@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
-import { MapPin, Wifi, Car, Bike, Utensils, Baby, Waves, Mountain, ChevronDown, X, Menu } from "lucide-react";
+import { MapPin, Wifi, Car, Bike, Utensils, Baby, Waves, Mountain, ChevronDown, X, Menu, ChevronLeft, ChevronRight } from "lucide-react";
 
 import imgExterior from "@/imports/parking_voiture_.jpeg";
 import imgFleurs from "@/imports/fleurs.jpeg";
@@ -10,6 +10,68 @@ import imgChVintage from "@/imports/ch_Vintage.jpeg";
 import imgChSoleil from "@/imports/ch_Soleil_.jpeg";
 import imgChChampetre1 from "@/imports/utf-8ch_Champetre_1.jpeg";
 import imgChBleue1 from "@/imports/ch_Bleue_1.jpeg";
+import imgSejour1 from "@/imports/se_jour_1.jpeg";
+import imgSejour2 from "@/imports/se_jour_2.jpeg";
+import imgSejour3 from "@/imports/se_jour_3.jpeg";
+import imgSejour4 from "@/imports/se_jour_4.jpeg";
+import imgSejour6 from "@/imports/se_jour_6_.jpeg";
+import imgSejour7 from "@/imports/se_jour_7_.jpeg";
+import imgSdbHaut1 from "@/imports/sdb_haut_.jpeg";
+import imgSdbHaut2 from "@/imports/sdb_haut_2_.jpeg";
+import imgWcBas from "@/imports/wc_bas.jpeg";
+
+function Carousel({ images, height = "420px" }: { images: { src: string; alt: string }[]; height?: string }) {
+  const [index, setIndex] = useState(0);
+  const prev = useCallback(() => setIndex((i) => (i - 1 + images.length) % images.length), [images.length]);
+  const next = useCallback(() => setIndex((i) => (i + 1) % images.length), [images.length]);
+  return (
+    <div className="relative overflow-hidden rounded-sm bg-muted group" style={{ height }}>
+      <div
+        className="flex h-full transition-transform duration-500 ease-in-out"
+        style={{ transform: `translateX(-${index * 100}%)` }}
+      >
+        {images.map(({ src, alt }) => (
+          <div key={alt} className="w-full flex-shrink-0 h-full">
+            <ImageWithFallback src={src} alt={alt} className="w-full h-full object-cover" />
+          </div>
+        ))}
+      </div>
+
+      {/* Arrows */}
+      <button
+        onClick={prev}
+        className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-background/80 backdrop-blur-sm rounded-full border border-border text-foreground opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background"
+        aria-label="Photo précédente"
+      >
+        <ChevronLeft size={18} />
+      </button>
+      <button
+        onClick={next}
+        className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-background/80 backdrop-blur-sm rounded-full border border-border text-foreground opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background"
+        aria-label="Photo suivante"
+      >
+        <ChevronRight size={18} />
+      </button>
+
+      {/* Dots */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIndex(i)}
+            className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${i === index ? "bg-white w-4" : "bg-white/50"}`}
+            aria-label={`Photo ${i + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Counter */}
+      <div className="absolute top-3 right-3 bg-background/70 backdrop-blur-sm text-foreground text-xs px-2.5 py-1 rounded-sm">
+        {index + 1} / {images.length}
+      </div>
+    </div>
+  );
+}
 
 const NAV_LINKS = [
   { href: "#gite", label: "Le Gîte" },
@@ -260,49 +322,78 @@ export default function App() {
       {/* ── INTÉRIEUR ── */}
       <section className="py-24 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="order-2 md:order-1 grid grid-cols-2 gap-4">
-              <ImageWithFallback
-                src={imgCuisine}
-                alt="Cuisine et salle à manger lumineuse avec table ronde en bois"
-                className="w-full h-56 object-cover rounded-sm col-span-2"
-              />
-              <ImageWithFallback
-                src={imgFleurs}
-                alt="Fleurs sauvages — coquelicots et bleuets dans les champs environnants"
-                className="w-full h-40 object-cover rounded-sm"
-              />
-              <div className="bg-primary/10 rounded-sm h-40 flex flex-col items-center justify-center text-center p-4">
-                <span className="text-3xl font-bold text-primary" style={{ fontFamily: "'Playfair Display', serif" }}>4</span>
-                <span className="text-xs text-muted-foreground uppercase tracking-wide mt-1">chambres<br />doubles</span>
+
+          {/* Header */}
+          <div className="mb-14">
+            <p className="text-accent text-xs uppercase tracking-[0.2em] mb-3 font-semibold">Intérieur</p>
+            <h2
+              className="text-3xl md:text-4xl font-bold leading-tight"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              Tout le confort du foyer
+            </h2>
+          </div>
+
+          {/* ── Séjour / Salle à manger ── */}
+          <div className="mb-16">
+            <div className="flex items-start gap-6 mb-7">
+              <div className="border-l-2 border-primary pl-4 flex-1">
+                <h3 className="font-semibold text-foreground mb-1">Séjour & Salle à manger</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+                  Un espace de vie cosy sous de belles poutres apparentes — canapé, fauteuils vintage moutarde, table de repas pour 8, bibliothèque, jeux de société, télévision et Wi-Fi.
+                </p>
               </div>
             </div>
 
-            <div className="order-1 md:order-2">
-              <p className="text-accent text-xs uppercase tracking-[0.2em] mb-4 font-semibold">Intérieur</p>
-              <h2
-                className="text-3xl md:text-4xl font-bold mb-6 leading-tight"
-                style={{ fontFamily: "'Playfair Display', serif" }}
-              >
-                Tout le confort du foyer
-              </h2>
+            <Carousel images={[
+              { src: imgSejour2, alt: "Séjour avec canapé vert, fauteuils moutarde et suspension en rotin sous les poutres" },
+              { src: imgSejour1, alt: "Table à manger en bois avec chaises et corbeille de fruits" },
+              { src: imgSejour6, alt: "Vue d'ensemble du séjour et salle à manger ouverts" },
+              { src: imgSejour4, alt: "Détail canapé vert et table basse avec noix et décorations" },
+              { src: imgSejour3, alt: "Coin salon avec plantes vertes et buffet en bois" },
+              { src: imgSejour7, alt: "Vue d'ensemble depuis la salle à manger vers le salon" },
+              { src: imgCuisine, alt: "Cuisine lumineuse avec table ronde en bois et buffet ancien" },
+            ]} />
+          </div>
 
-              <div className="space-y-5">
-                <div className="border-l-2 border-primary pl-4">
-                  <h3 className="font-semibold text-foreground mb-1">Rez-de-chaussée</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Séjour / salle à manger cosy bien équipé (jeux de sociétés, bibliothèque, télévision, Wi-Fi), cuisine entièrement équipée, buanderie avec tout l'électroménager, salle de douche, coin toilette et 2 WC séparés.
-                  </p>
-                </div>
-                <div className="border-l-2 border-accent pl-4">
-                  <h3 className="font-semibold text-foreground mb-1">Étage</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Quatre chambres avec lit double 140. La plus grande dispose en plus d'un coin toilette et d'un lit 90. Salle d'eau et WC séparés partagés à l'étage.
-                  </p>
-                </div>
+          {/* ── Sanitaires ── */}
+          <div className="grid md:grid-cols-2 gap-10">
+
+            {/* RDC */}
+            <div>
+              <div className="border-l-2 border-primary pl-4 mb-5">
+                <h3 className="font-semibold text-foreground mb-1">Rez-de-chaussée</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Cuisine entièrement équipée, buanderie avec tout l'électroménager, salle de douche, coin toilette et <strong>2 WC séparés</strong>.
+                </p>
               </div>
+              <div className="overflow-hidden rounded-sm h-56">
+                <ImageWithFallback
+                  src={imgWcBas}
+                  alt="WC du rez-de-chaussée carrelé avec éclairage doux"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Étage */}
+            <div>
+              <div className="border-l-2 border-accent pl-4 mb-5">
+                <h3 className="font-semibold text-foreground mb-1">Étage — Salle de bain</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Quatre chambres avec lit double 140. La plus grande dispose en plus d'un coin toilette et d'un lit 90. Salle d'eau et <strong>WC séparés</strong> à l'étage.
+                </p>
+              </div>
+              <Carousel
+                height="224px"
+                images={[
+                  { src: imgSdbHaut1, alt: "Palier de l'étage avec plantes et meuble en bois" },
+                  { src: imgSdbHaut2, alt: "Salle de bain de l'étage avec douche et porte en bois patinée" },
+                ]}
+              />
             </div>
           </div>
+
         </div>
       </section>
 

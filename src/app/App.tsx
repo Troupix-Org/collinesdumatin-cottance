@@ -5,7 +5,7 @@ import { MapPin, Wifi, Car, Bike, Utensils, Baby, Waves, Mountain, ChevronDown, 
 import imgExterior from "@/imports/parking_voiture_.jpeg";
 import imgFleurs from "@/imports/fleurs.jpeg";
 import imgCuisine from "@/imports/cuisine_1.jpeg";
-import imgCoinRepas from "@/imports/Coin_repas_.jpeg";
+import imgCoinRepas from "@/imports/Coin_repas_enhanced.png";
 import imgChVintage from "@/imports/ch_Vintage.jpeg";
 import imgChSoleil from "@/imports/ch_Soleil_.jpeg";
 import imgChChampetre1 from "@/imports/utf-8ch_Champetre_1.jpeg";

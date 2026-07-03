@@ -17,3 +17,7 @@ env.production.local
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+.github
+openspec
+AGENTS.md

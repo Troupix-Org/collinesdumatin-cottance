@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
-import { MapPin, Wifi, Car, Bike, Utensils, Baby, Waves, Mountain, ChevronDown, X, Menu } from "lucide-react";
+import { MapPin, Wifi, Car, Bike, Utensils, Baby, Waves, Mountain, ChevronDown, X, Menu, ChevronLeft, ChevronRight} from "lucide-react";
 
-import imgExterior from "@/imports/parking_voiture_.jpeg";
+import imgExterior from "@/imports/Gîte Collines du matin.png";
 import imgFleurs from "@/imports/fleurs.jpeg";
 import imgCuisine from "@/imports/cuisine_1.jpeg";
 import imgCoinRepas from "@/imports/Coin_repas_enhanced.png";
@@ -10,6 +10,76 @@ import imgChVintage from "@/imports/ch_Vintage.jpeg";
 import imgChSoleil from "@/imports/ch_Soleil_.jpeg";
 import imgChChampetre1 from "@/imports/utf-8ch_Champetre_1.jpeg";
 import imgChBleue1 from "@/imports/ch_Bleue_1.jpeg";
+import imgBuanderie from "@/imports/buanderie.jpeg"
+import imgSdbBas from "@/imports/s d douche bas .jpeg"
+import imgWCBas from "@/imports/wc bas.jpeg"
+import imgSdbHaut1 from "@/imports/sdb haut .jpeg"
+import imgSdbHaut2 from "@/imports/sdb haut 2 .jpeg"
+import imgCoinSalonExt from "@/imports/salon jardin.png"
+import imgSejour1 from "@/imports/séjour 1.jpeg"
+import imgSejour2 from "@/imports/séjour 2.jpeg"
+import imgSejour3 from "@/imports/séjour 3.jpeg"
+import imgSejour4 from "@/imports/séjour 4.jpeg"
+import imgSejour5 from "@/imports/séjour 5 .jpeg"
+import imgSejour6 from "@/imports/séjour 6 .jpeg"
+import imgSejour7 from "@/imports/séjour 7 .jpeg"
+
+
+
+function Carousel({ images, height = "420px" }: { images: { src: string; alt: string }[]; height?: string }) {
+  const [index, setIndex] = useState(0);
+  const prev = useCallback(() => setIndex((i) => (i - 1 + images.length) % images.length), [images.length]);
+  const next = useCallback(() => setIndex((i) => (i + 1) % images.length), [images.length]);
+  return (
+    <div className="relative overflow-hidden rounded-sm bg-muted group" style={{ height }}>
+      <div
+        className="flex h-full transition-transform duration-500 ease-in-out"
+        style={{ transform: `translateX(-${index * 100}%)` }}
+      >
+        {images.map(({ src, alt }) => (
+          <div key={alt} className="w-full flex-shrink-0 h-full flex items-center justify-center">
+            <ImageWithFallback src={src} alt={alt} className="h-full object-cover" />
+          </div>
+        ))}
+      </div>
+
+      {/* Arrows */}
+      <button
+        onClick={prev}
+        className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-background/80 backdrop-blur-sm rounded-full border border-border text-foreground opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background"
+        aria-label="Photo précédente"
+      >
+        <ChevronLeft size={18} />
+      </button>
+      <button
+        onClick={next}
+        className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-background/80 backdrop-blur-sm rounded-full border border-border text-foreground opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background"
+        aria-label="Photo suivante"
+      >
+        <ChevronRight size={18} />
+      </button>
+
+      {/* Dots */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIndex(i)}
+            className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${i === index ? "bg-white w-4" : "bg-white/50"}`}
+            aria-label={`Photo ${i + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Counter */}
+      <div className="absolute top-3 right-3 bg-background/70 backdrop-blur-sm text-foreground text-xs px-2.5 py-1 rounded-sm">
+        {index + 1} / {images.length}
+      </div>
+    </div>
+  );
+}
+
+
 
 const NAV_LINKS = [
   { href: "#gite", label: "Le Gîte" },
@@ -261,21 +331,24 @@ export default function App() {
       <section className="py-24 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="order-2 md:order-1 grid grid-cols-2 gap-4">
-              <ImageWithFallback
-                src={imgCuisine}
-                alt="Cuisine et salle à manger lumineuse avec table ronde en bois"
-                className="w-full h-56 object-cover rounded-sm col-span-2"
+            <div className="order-2 md:order-1">
+              <Carousel
+                images={[
+                  { src: imgSejour1, alt: "Table à manger en bois avec chaises et corbeille de fruits " },
+                  { src: imgSejour2, alt: "Séjour avec canapé vert, fauteuils moutarde et suspension en rotin sous les poutres" },
+                  { src: imgSejour3, alt: "Coin salon avec plantes vertes et buffet en bois" },
+                  { src: imgSejour4, alt: "Détail canapé vert et table basse avec noix et décorations" },
+                  { src: imgSejour5, alt: "Détail canapé vert et table basse avec noix et décorations" },
+                  { src: imgSejour6, alt: "Vue d'ensemble du séjour et salle à manger ouverts" },
+                  { src: imgSejour7, alt: "Vue d'ensemble depuis la salle à manger vers le salon" },
+                  { src: imgBuanderie, alt: "Buanderie et électroménager" },
+                  { src: imgSdbBas, alt: "Salle de douche rez-de-chaussée" },
+                  { src: imgWCBas, alt: "WC rez-de-chaussée" },
+                  { src: imgSdbHaut1, alt: "Salle d'eau à l'étage — vue intérieure" },
+                  { src: imgSdbHaut2, alt: "Salle d'eau à l'étage — détails" },
+                ]}
+                height="420px"
               />
-              <ImageWithFallback
-                src={imgFleurs}
-                alt="Fleurs sauvages — coquelicots et bleuets dans les champs environnants"
-                className="w-full h-40 object-cover rounded-sm"
-              />
-              <div className="bg-primary/10 rounded-sm h-40 flex flex-col items-center justify-center text-center p-4">
-                <span className="text-3xl font-bold text-primary" style={{ fontFamily: "'Playfair Display', serif" }}>4</span>
-                <span className="text-xs text-muted-foreground uppercase tracking-wide mt-1">chambres<br />doubles</span>
-              </div>
             </div>
 
             <div className="order-1 md:order-2">
@@ -381,9 +454,9 @@ export default function App() {
 
             <div>
               <ImageWithFallback
-                src={imgCoinRepas}
+                src={imgCoinSalonExt}
                 alt="Cour extérieure avec table et chaises en bois sous l'arche en pierre, vue sur les collines du Forez"
-                className="w-full h-[460px] object-cover rounded-sm"
+                className="w-full object-cover rounded-sm"
               />
             </div>
           </div>

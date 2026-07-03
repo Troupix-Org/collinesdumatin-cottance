@@ -2,28 +2,26 @@ import { useCallback, useEffect, useState } from "react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import { MapPin, Wifi, Car, Bike, Utensils, Baby, Waves, Mountain, ChevronDown, X, Menu, ChevronLeft, ChevronRight} from "lucide-react";
 
-import imgExterior from "@/imports/Gîte Collines du matin.png";
+import imgExterior from "@/imports/gite_collines_du_matin.png";
 import imgFleurs from "@/imports/fleurs.jpeg";
-import imgCuisine from "@/imports/cuisine_1.jpeg";
 import imgCoinRepas from "@/imports/Coin_repas_enhanced.png";
-import imgChVintage from "@/imports/ch_Vintage.jpeg";
-import imgChSoleil from "@/imports/ch_Soleil_.jpeg";
+import imgChVintage from "@/imports/ch_vintage.jpeg";
+import imgChSoleil from "@/imports/ch_soleil.jpeg";
 import imgChChampetre1 from "@/imports/utf-8ch_Champetre_1.jpeg";
 import imgChBleue1 from "@/imports/ch_Bleue_1.jpeg";
 import imgBuanderie from "@/imports/buanderie.jpeg"
-import imgSdbBas from "@/imports/s d douche bas .jpeg"
-import imgWCBas from "@/imports/wc bas.jpeg"
-import imgSdbHaut1 from "@/imports/sdb haut .jpeg"
-import imgSdbHaut2 from "@/imports/sdb haut 2 .jpeg"
-import imgCoinSalonExt from "@/imports/salon jardin.png"
-import imgSejour1 from "@/imports/séjour 1.jpeg"
-import imgSejour2 from "@/imports/séjour 2.jpeg"
-import imgSejour3 from "@/imports/séjour 3.jpeg"
-import imgSejour4 from "@/imports/séjour 4.jpeg"
-import imgSejour5 from "@/imports/séjour 5 .jpeg"
-import imgSejour6 from "@/imports/séjour 6 .jpeg"
-import imgSejour7 from "@/imports/séjour 7 .jpeg"
-
+import imgSdbBas from "@/imports/s_d_douche_bas.jpeg"
+import imgWCBas from "@/imports/wc_bas.jpeg"
+import imgSdbHaut1 from "@/imports/sdb_haut.jpeg"
+import imgSdbHaut2 from "@/imports/sdb_haut_2.jpeg"
+import imgCoinSalonExt from "@/imports/salon_jardin.png"
+import imgSejour1 from "@/imports/sejour_1.jpeg"
+import imgSejour2 from "@/imports/sejour_2.jpeg"
+import imgSejour3 from "@/imports/sejour_3.jpeg"
+import imgSejour4 from "@/imports/sejour_4.jpeg"
+import imgSejour5 from "@/imports/sejour_5.jpeg"
+import imgSejour6 from "@/imports/sejour_6.jpeg"
+import imgSejour7 from "@/imports/sejour_7.jpeg"
 
 
 function Carousel({ images, height = "420px" }: { images: { src: string; alt: string }[]; height?: string }) {

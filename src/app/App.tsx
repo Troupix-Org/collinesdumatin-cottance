@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import { MapPin, Wifi, Car, Bike, Utensils, Baby, Waves, Mountain, ChevronDown, X, Menu, ChevronLeft, ChevronRight} from "lucide-react";
 
@@ -30,6 +30,14 @@ function Carousel({ images, height = "420px" }: { images: { src: string; alt: st
   const [index, setIndex] = useState(0);
   const prev = useCallback(() => setIndex((i) => (i - 1 + images.length) % images.length), [images.length]);
   const next = useCallback(() => setIndex((i) => (i + 1) % images.length), [images.length]);
+  // Auto-advance every 15 seconds
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % images.length);
+    }, 7000);
+    return () => clearInterval(id);
+  }, [images.length]);
   return (
     <div className="relative overflow-hidden rounded-sm bg-muted group" style={{ height }}>
       <div

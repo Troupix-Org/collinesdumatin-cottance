@@ -132,6 +132,25 @@ const AMENITIES = [
 ];
 
 export default function App() {
+   useEffect(() => {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+      <rect width="32" height="32" rx="7" fill="#7A5C38"/>
+      <circle cx="16" cy="13" r="5.5" fill="#E8B840"/>
+      <ellipse cx="10" cy="26" rx="13" ry="10" fill="#5C7A52"/>
+      <ellipse cx="23" cy="27" rx="12" ry="9" fill="#3D5C34"/>
+    </svg>`;
+    const href = `data:image/svg+xml,${encodeURIComponent(svg)}`;
+    let link = document.querySelector<HTMLLinkElement>("link[rel~='icon']");
+    const created = !link;
+    if (created) {
+      link = document.createElement("link");
+      link.rel = "icon";
+    }
+    link!.type = "image/svg+xml";
+    link!.href = href;
+    if (created) document.head.appendChild(link!);
+    return () => { if (created && link?.parentNode) document.head.removeChild(link!); };
+  }, []);
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 

@@ -26,7 +26,25 @@ type FormValues = {
 };
 
 const FORM_ENDPOINT = "https://formsubmit.co/ajax/contact@collinesdumatin-cottance.fr";
+const CONTACT_EMAIL = "contact@collinesdumatin-cottance.fr";
 const RECAPTCHA_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "";
+
+function openMailtoDialog(data: FormValues) {
+  const subject = data.subject || "Message depuis le site";
+  const body = [
+    `Nom: ${data.name}`,
+    `Email: ${data.email}`,
+    data.phone ? `Téléphone: ${data.phone}` : null,
+    data.dates ? `Dates souhaitées: ${data.dates}` : null,
+    "",
+    data.message,
+  ]
+    .filter(Boolean)
+    .join("\r\n");
+
+  const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = mailto;
+}
 
 async function loadRecaptcha(siteKey: string) {
   if (!siteKey) return null;
@@ -81,13 +99,20 @@ export default function ContactForm() {
         body: fd,
       });
 
-      if (!res.ok) throw new Error("Network error");
+      const json = await res.json().catch(() => null);
+      const apiMessage = json?.message || "Erreur réseau";
+      const apiSuccess = json?.success;
+
+      if (!res.ok || apiSuccess === false || apiSuccess === "false") {
+        throw new Error(apiMessage);
+      }
 
       toast.success("Message envoyé — merci !");
       methods.reset();
     } catch (err) {
       console.error(err);
-      toast.error("Impossible d'envoyer le message. Réessayez plus tard.");
+      toast.error("Impossible d'envoyer le message. Ouverture du client mail...");
+      openMailtoDialog(data);
     } finally {
       setSending(false);
     }
@@ -182,10 +207,17 @@ export default function ContactForm() {
           />
         </div>
 
-        <div className="pt-2">
+        <div className="pt-2 space-y-3">
           <Button type="submit" className="w-full" disabled={sending}>
             {sending ? "Envoi…" : "Envoyer le message"}
           </Button>
+          <button
+            type="button"
+            onClick={() => openMailtoDialog(methods.getValues())}
+            className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground transition-colors hover:bg-muted"
+          >
+            Envoyer un e-mail directement
+          </button>
         </div>
       </form>
     </Form>

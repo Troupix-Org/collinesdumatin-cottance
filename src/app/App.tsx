@@ -693,13 +693,25 @@ export default function App() {
               </p>
             </div>
 
-            <div>
+            <div className="flex flex-col gap-4 sm:flex-row">
               <button
                 onClick={() => setContactOpen(true)}
                 className="bg-primary text-primary-foreground px-6 py-3 text-sm rounded-sm hover:opacity-90 transition-opacity"
               >
                 Réserver
               </button>
+              <a
+                href="mailto:contact@collinesdumatin-cottance.fr?subject=Demande%20de%20r%C3%A9servation%20-%20Collines%20du%20Matin"
+                className="inline-flex items-center justify-center border border-border text-foreground px-6 py-3 text-sm rounded-sm hover:bg-muted transition-colors"
+              >
+                Envoyer un e-mail
+              </a>
+              <a
+                href="tel:+33676551020"
+                className="inline-flex items-center justify-center border border-border text-foreground px-6 py-3 text-sm rounded-sm hover:bg-muted transition-colors"
+              >
+                Appeler 06 76 55 10 **
+              </a>
             </div>
           </div>
         </div>
@@ -749,8 +761,13 @@ export default function App() {
             <div>
               <h4 className="text-background text-sm font-semibold uppercase tracking-wide mb-3">Contact</h4>
               <p className="text-sm mb-1">
-                  <a href="#contact" onClick={(e) => scrollTo(e, "#contact")} className="hover:text-background transition-colors">
+                  <a href="mailto:contact@collinesdumatin-cottance.fr?subject=Demande%20de%20contact%20-%20Collines%20du%20Matin" className="hover:text-background transition-colors">
                     contact@collinesdumatin-cottance.fr
+                  </a>
+              </p>
+              <p className="text-sm mb-1">
+                  <a href="tel:+33676551020" className="hover:text-background transition-colors">
+                    06 76 55 10 **
                   </a>
               </p>
               <p className="text-sm leading-relaxed mt-3">

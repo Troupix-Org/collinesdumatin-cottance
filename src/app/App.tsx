@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import { MapPin, Wifi, Car, Bike, Utensils, Baby, Waves, Mountain, ChevronDown, X, Menu, ChevronLeft, ChevronRight} from "lucide-react";
+import ContactForm from "@/app/components/contact/ContactForm";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/app/components/ui/dialog";
 
 import imgExterior from "@/imports/gite_collines_du_matin.png";
 import imgFleurs from "@/imports/fleurs.jpeg";
@@ -93,6 +95,7 @@ const NAV_LINKS = [
   { href: "#exterieur", label: "Extérieur" },
   { href: "#tarifs", label: "Tarifs" },
   { href: "#acces", label: "Accès" },
+  { href: "#contact", label: "Contact" },
 ];
 
 const ROOMS = [
@@ -150,6 +153,7 @@ export default function App() {
     return () => { if (created && link?.parentNode) document.head.removeChild(link!); };
   }, []);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -197,12 +201,12 @@ export default function App() {
                 {l.label}
               </a>
             ))}
-            <a
-              href="mailto:contact@collinesdumatin.fr"
+            <button
+              onClick={() => setContactOpen(true)}
               className="bg-primary text-primary-foreground px-5 py-2 text-sm rounded-sm hover:opacity-90 transition-opacity"
             >
               Réserver
-            </a>
+            </button>
           </nav>
 
           {/* Mobile burger */}
@@ -228,12 +232,12 @@ export default function App() {
                 {l.label}
               </a>
             ))}
-            <a
-              href="mailto:contact@collinesdumatin.fr"
+            <button
+              onClick={() => setContactOpen(true)}
               className="bg-primary text-primary-foreground px-5 py-2.5 text-sm text-center rounded-sm"
             >
               Réserver
-            </a>
+            </button>
           </div>
         )}
       </header>
@@ -558,7 +562,7 @@ export default function App() {
 
           <div className="mt-10 text-center">
             <a
-              href="mailto:contact@collinesdumatin.fr"
+              href="mailto:mc.caizergues@gmail.com"
               className="inline-block bg-primary-foreground text-primary px-10 py-4 text-sm font-semibold tracking-wide hover:opacity-90 transition-opacity rounded-sm"
             >
               Contacter le propriétaire
@@ -672,6 +676,45 @@ export default function App() {
         </div>
       </section>
 
+      {/* ── CONTACT ── */}
+      <section id="contact" className="py-24 md:py-32 bg-card">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+              <p className="text-accent text-xs uppercase tracking-[0.2em] mb-4 font-semibold">Contact</p>
+              <h2
+                className="text-3xl md:text-4xl font-bold mb-6 leading-tight"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                Contactez-nous
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                Pour toute question ou réservation, envoyez-nous un message via le formulaire — nous répondrons à l'adresse contact@collinesdumatin-cottance.fr.
+              </p>
+            </div>
+
+            <div>
+              <button
+                onClick={() => setContactOpen(true)}
+                className="bg-primary text-primary-foreground px-6 py-3 text-sm rounded-sm hover:opacity-90 transition-opacity"
+              >
+                Réserver
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Dialog open={contactOpen} onOpenChange={setContactOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Réserver / Contact</DialogTitle>
+            <DialogDescription>Envoyez-nous un message pour une réservation ou une question.</DialogDescription>
+          </DialogHeader>
+          <ContactForm />
+        </DialogContent>
+      </Dialog>
+
       {/* ── FOOTER ── */}
       <footer className="bg-foreground text-background/80 py-12">
         <div className="max-w-6xl mx-auto px-6">
@@ -706,9 +749,9 @@ export default function App() {
             <div>
               <h4 className="text-background text-sm font-semibold uppercase tracking-wide mb-3">Contact</h4>
               <p className="text-sm mb-1">
-                <a href="mailto:contact@collinesdumatin.fr" className="hover:text-background transition-colors">
-                  contact@collinesdumatin.fr
-                </a>
+                  <a href="#contact" onClick={(e) => scrollTo(e, "#contact")} className="hover:text-background transition-colors">
+                    contact@collinesdumatin-cottance.fr
+                  </a>
               </p>
               <p className="text-sm leading-relaxed mt-3">
                 Feurs · Loire (42) · France
